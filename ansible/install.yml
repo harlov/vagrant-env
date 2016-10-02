@@ -1,0 +1,22 @@
+# vim:ft=ansible:
+---
+- name: Install vagrant
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: Add virtualbox repo
+      yum_repository:
+        name: virtualbox
+        description: Fedora $releasever - $basearch - VirtualBox
+        baseurl: http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://www.virtualbox.org/download/oracle_vbox.asc
+
+    - name: Install vagrant base
+      package: name=vagrant state=latest
+
+    - name: Install virtualbox
+      package: name=VirtualBox-5.1 state=latest
